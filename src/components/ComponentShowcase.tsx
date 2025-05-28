@@ -28,6 +28,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
+import { DatePicker } from "./date-picker";
 
 interface Component {
   id: string;
@@ -42,6 +43,7 @@ const ComponentShowcase: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date>();
 
   // Mock component data
   const components: Component[] = [
@@ -133,6 +135,24 @@ const ComponentShowcase: React.FC = () => {
           </SelectContent>
         </Select>
       ),
+    },
+    {
+      id: "date-picker-1",
+      name: "DatePicker",
+      description: "Um componente para seleção de data com calendário interativo.",
+      category: "inputs",
+      code: `import { DatePicker } from "./date-picker";
+import { useState } from "react";
+
+// No seu componente:
+const [date, setDate] = useState<Date>();
+
+// No seu JSX:
+<DatePicker 
+  date={date} 
+  onDateChange={setDate} 
+/>`,
+      preview: <DatePicker date={selectedDate} onDateChange={setSelectedDate} />,
     },
   ];
 
