@@ -167,37 +167,37 @@ const ConfigurationPanel = () => {
         </Alert>
       )}
 
-      <div className="flex gap-6">
-        <div className="w-2/3">
-          <Tabs
-            defaultValue="colors"
-            value={activeTab}
-            onValueChange={setActiveTab}
-            className="w-full"
-          >
-            <TabsList className="grid grid-cols-4 mb-6">
-              <TabsTrigger value="colors">
-                <Palette className="mr-2 h-4 w-4" />
-                Colors
-              </TabsTrigger>
-              <TabsTrigger value="typography">
-                <Type className="mr-2 h-4 w-4" />
-                Typography
-              </TabsTrigger>
-              <TabsTrigger value="spacing">
-                <div className="mr-2 h-4 w-4 flex items-center justify-center">
-                  ↔
-                </div>
-                Spacing
-              </TabsTrigger>
-              <TabsTrigger value="border">
-                <div className="mr-2 h-4 w-4 border border-current rounded-md"></div>
-                Border
-              </TabsTrigger>
-            </TabsList>
+      <Tabs
+        defaultValue="colors"
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="w-full"
+      >
+        <TabsList className="grid grid-cols-4 w-full mb-6">
+          <TabsTrigger value="colors" className="w-full">
+            <Palette className="mr-2 h-4 w-4" />
+            Colors
+          </TabsTrigger>
+          <TabsTrigger value="typography" className="w-full">
+            <Type className="mr-2 h-4 w-4" />
+            Typography
+          </TabsTrigger>
+          <TabsTrigger value="spacing" className="w-full">
+            <div className="mr-2 h-4 w-4 flex items-center justify-center">
+              ↔
+            </div>
+            Spacing
+          </TabsTrigger>
+          <TabsTrigger value="border" className="w-full">
+            <div className="mr-2 h-4 w-4 border border-current rounded-md"></div>
+            Border
+          </TabsTrigger>
+        </TabsList>
 
-            <TabsContent value="colors" className="space-y-4">
-              <Card>
+        <div className="flex gap-6 relative">
+          <div className="w-2/3">
+            <TabsContent value="colors" className="space-y-0 mt-0">
+              <Card className="mt-0">
                 <CardHeader>
                   <CardTitle>Color Palette</CardTitle>
                   <CardDescription>
@@ -205,43 +205,35 @@ const ConfigurationPanel = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {colors.map((color, index) => (
-                    <div
-                      key={color.name}
-                      className="grid grid-cols-3 items-center gap-4"
-                    >
-                      <Label
-                        htmlFor={`color-${color.name}`}
-                        className="capitalize"
+                  <div className="grid grid-cols-2 gap-4">
+                    {colors.map((colorItem, colorIndex) => (
+                      <div
+                        key={colorItem.name}
+                        className="flex items-center gap-2"
                       >
-                        {color.name}
-                      </Label>
-                      <div className="flex items-center gap-2">
+                        <Label
+                          htmlFor={`color-${colorItem.name}`}
+                          className="capitalize w-24"
+                        >
+                          {colorItem.name}
+                        </Label>
                         <div
-                          className="w-6 h-6 rounded border"
-                          style={{ backgroundColor: color.value }}
-                        />
-                        <Input
-                          id={`color-${color.name}`}
-                          type="text"
-                          value={color.value}
-                          onChange={(e) =>
-                            handleColorChange(index, e.target.value)
-                          }
-                        />
-                      </div>
-                      <div>
-                        <Input
-                          type="color"
-                          value={color.value}
-                          onChange={(e) =>
-                            handleColorChange(index, e.target.value)
-                          }
-                          className="w-full h-8"
+                          className="w-8 h-8 rounded-md border cursor-pointer hover:ring-2 hover:ring-primary/20 transition-all"
+                          style={{ backgroundColor: colorItem.value }}
+                          onClick={() => {
+                            const input = document.createElement('input');
+                            input.type = 'color';
+                            input.value = colorItem.value;
+                            input.onchange = (e) => {
+                              const target = e.target as HTMLInputElement;
+                              handleColorChange(colorIndex, target.value);
+                            };
+                            input.click();
+                          }}
                         />
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                   <div className="flex items-center space-x-2 pt-4">
                     <Switch
                       id="dark-mode"
@@ -481,161 +473,161 @@ const ConfigurationPanel = () => {
                 </CardContent>
               </Card>
             </TabsContent>
-          </Tabs>
-        </div>
+          </div>
 
-        <div className="w-1/3">
-          <Card className="sticky top-6">
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Eye className="mr-2 h-4 w-4" />
-                Preview
-              </CardTitle>
-              <CardDescription>
-                Live preview of your configuration
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div
-                className="p-4 rounded-lg mb-4 transition-all"
-                style={{
-                  backgroundColor: isDarkMode
-                    ? colors.find((c) => c.name === "background")?.value ||
-                      "#000"
-                    : colors.find((c) => c.name === "background")?.value ||
-                      "#fff",
-                  color: isDarkMode
-                    ? "#fff"
-                    : colors.find((c) => c.name === "foreground")?.value ||
-                      "#000",
-                  fontFamily: typography.fontFamily,
-                  fontSize: typography.fontSize,
-                  fontWeight: typography.fontWeight,
-                }}
-              >
-                <h3
-                  className="mb-2"
-                  style={{
-                    color:
-                      colors.find((c) => c.name === "primary")?.value || "#000",
-                  }}
-                >
-                  Sample Heading
-                </h3>
-                <p className="mb-4">
-                  This is a preview of your theme configuration with sample
-                  text.
-                </p>
-
-                <div className="flex gap-2 mb-4">
-                  <button
-                    className="px-3 py-1 rounded"
-                    style={{
-                      backgroundColor:
-                        colors.find((c) => c.name === "primary")?.value ||
-                        "#000",
-                      color: "#fff",
-                      borderRadius: `${border.radius}rem`,
-                    }}
-                  >
-                    Primary
-                  </button>
-                  <button
-                    className="px-3 py-1 rounded"
-                    style={{
-                      backgroundColor:
-                        colors.find((c) => c.name === "secondary")?.value ||
-                        "#000",
-                      color: "#fff",
-                      borderRadius: `${border.radius}rem`,
-                    }}
-                  >
-                    Secondary
-                  </button>
-                </div>
-
+          <div className="w-1/3">
+            <Card className="sticky top-0">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Eye className="mr-2 h-4 w-4" />
+                  Preview
+                </CardTitle>
+                <CardDescription>
+                  Live preview of your configuration
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
                 <div
-                  className="p-2 mb-4"
+                  className="p-4 rounded-lg mb-4 transition-all"
                   style={{
-                    backgroundColor:
-                      colors.find((c) => c.name === "muted")?.value ||
-                      "#f1f5f9",
-                    borderRadius: `${border.radius}rem`,
+                    backgroundColor: isDarkMode
+                      ? colors.find((c) => c.name === "background")?.value ||
+                        "#000"
+                      : colors.find((c) => c.name === "background")?.value ||
+                        "#fff",
+                    color: isDarkMode
+                      ? "#fff"
+                      : colors.find((c) => c.name === "foreground")?.value ||
+                        "#000",
+                    fontFamily: typography.fontFamily,
+                    fontSize: typography.fontSize,
+                    fontWeight: typography.fontWeight,
                   }}
                 >
-                  <p
+                  <h3
+                    className="mb-2"
                     style={{
-                      color: isDarkMode
-                        ? "#000"
-                        : colors.find((c) => c.name === "foreground")?.value ||
-                          "#000",
+                      color:
+                        colors.find((c) => c.name === "primary")?.value || "#000",
                     }}
                   >
-                    Muted background container
+                    Sample Heading
+                  </h3>
+                  <p className="mb-4">
+                    This is a preview of your theme configuration with sample
+                    text.
                   </p>
-                </div>
 
-                <div
-                  className="p-2"
-                  style={{
-                    borderWidth: `${border.width}px`,
-                    borderStyle: "solid",
-                    borderColor:
-                      colors.find((c) => c.name === "accent")?.value ||
-                      "#22c55e",
-                    borderRadius: `${border.radius}rem`,
-                  }}
-                >
-                  <p>Accent border container</p>
-                </div>
-              </div>
+                  <div className="flex gap-2 mb-4">
+                    <button
+                      className="px-3 py-1 rounded"
+                      style={{
+                        backgroundColor:
+                          colors.find((c) => c.name === "primary")?.value ||
+                          "#000",
+                        color: "#fff",
+                        borderRadius: `${border.radius}rem`,
+                      }}
+                    >
+                      Primary
+                    </button>
+                    <button
+                      className="px-3 py-1 rounded"
+                      style={{
+                        backgroundColor:
+                          colors.find((c) => c.name === "secondary")?.value ||
+                          "#000",
+                        color: "#fff",
+                        borderRadius: `${border.radius}rem`,
+                      }}
+                    >
+                      Secondary
+                    </button>
+                  </div>
 
-              <Separator className="my-4" />
-
-              <div className="space-y-2">
-                <h4 className="text-sm font-medium">Configuration JSON</h4>
-                <div className="relative">
-                  <pre className="text-xs p-2 bg-muted rounded-md overflow-auto max-h-40">
-                    {JSON.stringify(
-                      {
-                        colors,
-                        typography,
-                        spacing,
-                        border,
-                        darkMode: isDarkMode,
-                      },
-                      null,
-                      2,
-                    )}
-                  </pre>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="absolute top-2 right-2"
-                    onClick={() => {
-                      navigator.clipboard.writeText(
-                        JSON.stringify(
-                          {
-                            colors,
-                            typography,
-                            spacing,
-                            border,
-                            darkMode: isDarkMode,
-                          },
-                          null,
-                          2,
-                        ),
-                      );
+                  <div
+                    className="p-2 mb-4"
+                    style={{
+                      backgroundColor:
+                        colors.find((c) => c.name === "muted")?.value ||
+                        "#f1f5f9",
+                      borderRadius: `${border.radius}rem`,
                     }}
                   >
-                    <Copy className="h-3 w-3" />
-                  </Button>
+                    <p
+                      style={{
+                        color: isDarkMode
+                          ? "#000"
+                          : colors.find((c) => c.name === "foreground")?.value ||
+                            "#000",
+                      }}
+                    >
+                      Muted background container
+                    </p>
+                  </div>
+
+                  <div
+                    className="p-2"
+                    style={{
+                      borderWidth: `${border.width}px`,
+                      borderStyle: "solid",
+                      borderColor:
+                        colors.find((c) => c.name === "accent")?.value ||
+                        "#22c55e",
+                      borderRadius: `${border.radius}rem`,
+                    }}
+                  >
+                    <p>Accent border container</p>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+
+                <Separator className="my-4" />
+
+                <div className="space-y-2">
+                  <h4 className="text-sm font-medium">Configuration JSON</h4>
+                  <div className="relative">
+                    <pre className="text-xs p-2 bg-muted rounded-md overflow-auto max-h-40">
+                      {JSON.stringify(
+                        {
+                          colors,
+                          typography,
+                          spacing,
+                          border,
+                          darkMode: isDarkMode,
+                        },
+                        null,
+                        2,
+                      )}
+                    </pre>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="absolute top-2 right-2"
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          JSON.stringify(
+                            {
+                              colors,
+                              typography,
+                              spacing,
+                              border,
+                              darkMode: isDarkMode,
+                            },
+                            null,
+                            2,
+                          ),
+                        );
+                      }}
+                    >
+                      <Copy className="h-3 w-3" />
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      </div>
+      </Tabs>
     </div>
   );
 };
