@@ -9,11 +9,28 @@ import {
 import { useTheme } from "@/contexts/ThemeContext";
 
 interface TokenShowcaseProps {
-  activeSubmenu: "border" | "color" | "types" | "space";
+  activeSubmenu: "border" | "color" | "types" | "space" | "shadow" | "screen" | "opacity";
 }
 
 const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
-  const { colors } = useTheme();
+  const { colors, updateColorValue } = useTheme();
+
+  const handleColorChange = (category: string, name: string, value: string) => {
+    updateColorValue(category, name, value);
+  };
+
+  // Find the value for $color-neutral-darkest
+  const neutralDarkestColor = colors
+    .find(category => category.category === "Neutral")
+    ?.colors.find(color => color.name === "darkest")?.value || '#1F1D1D'; // Fallback to default if not found
+
+  // Helper to convert hex to rgba
+  const hexToRgba = (hex: string, alpha: number) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  };
 
   return (
     <div className="w-full space-y-6">
@@ -109,132 +126,33 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
               <CardDescription>Color palette tokens</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Brand Primary */}
-              <div>
-                <h4 className="text-lg font-semibold mb-4">Brand Primary</h4>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                  {colors.map((color) => (
-                    <div key={color.name} className="flex flex-col items-center">
-                      <div 
-                        className="w-full h-12 rounded-md mb-2" 
-                        style={{ backgroundColor: color.value }}
-                      ></div>
-                      <p className="text-sm font-medium">$color-{color.name}</p>
-                      <p className="text-xs text-muted-foreground">{color.value}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Neutral */}
-              <div>
-                <h4 className="text-lg font-semibold mb-4">Neutral</h4>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#FFFFFF' }}></div>
-                    <p className="text-sm font-medium">$color-neutral-lightest</p>
-                    <p className="text-xs text-muted-foreground">#FFFFFF</p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#F8F8F8' }}></div>
-                    <p className="text-sm font-medium">$color-neutral-light</p>
-                    <p className="text-xs text-muted-foreground">#F8F8F8</p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#DBDBDB' }}></div>
-                    <p className="text-sm font-medium">$color-neutral-medium</p>
-                    <p className="text-xs text-muted-foreground">#DBDBDB</p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#525252' }}></div>
-                    <p className="text-sm font-medium">$color-neutral-dark</p>
-                    <p className="text-xs text-muted-foreground">#525252</p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#1F1D1D' }}></div>
-                    <p className="text-sm font-medium">$color-neutral-darkest</p>
-                    <p className="text-xs text-muted-foreground">#1F1D1D</p>
+              {colors.map((colorCategory) => (
+                <div key={colorCategory.category}>
+                  <h4 className="text-lg font-semibold mb-4">{colorCategory.category}</h4>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    {colorCategory.colors.map((colorItem) => (
+                      <div key={colorItem.name} className="flex flex-col items-center">
+                        <div
+                          className="w-full h-12 rounded-md mb-2 cursor-pointer hover:ring-2 hover:ring-primary/20 transition-all"
+                          style={{ backgroundColor: colorItem.value }}
+                          onClick={() => {
+                            const input = document.createElement('input');
+                            input.type = 'color';
+                            input.value = colorItem.value;
+                            input.onchange = (e) => {
+                              const target = e.target as HTMLInputElement;
+                              handleColorChange(colorCategory.category, colorItem.name, target.value);
+                            };
+                            input.click();
+                          }}
+                        ></div>
+                        <p className="text-sm font-medium">$color-{colorItem.name}</p>
+                        <p className="text-xs text-muted-foreground">{colorItem.value}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              </div>
-
-              {/* Support Highlights */}
-              <div>
-                <h4 className="text-lg font-semibold mb-4">Support Highlights</h4>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#FFFAAD' }}></div>
-                    <p className="text-sm font-medium">$color-support-highlight-lightest</p>
-                    <p className="text-xs text-muted-foreground">#FFFAAD</p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#FFE458' }}></div>
-                    <p className="text-sm font-medium">$color-support-highlight-light</p>
-                    <p className="text-xs text-muted-foreground">#FFE458</p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#FFC722' }}></div>
-                    <p className="text-sm font-medium">$color-support-highlight-medium</p>
-                    <p className="text-xs text-muted-foreground">#FFC722</p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#FB9C2D' }}></div>
-                    <p className="text-sm font-medium">$color-support-highlight-dark</p>
-                    <p className="text-xs text-muted-foreground">#FB9C2D</p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#B84D01' }}></div>
-                    <p className="text-sm font-medium">$color-support-highlight-darkest</p>
-                    <p className="text-xs text-muted-foreground">#B84D01</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Support Success */}
-              <div>
-                <h4 className="text-lg font-semibold mb-4">Support Success</h4>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#DDF9ED' }}></div>
-                    <p className="text-sm font-medium">$color-support-success-light</p>
-                    <p className="text-xs text-muted-foreground">#DDF9ED</p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#006B4F' }}></div>
-                    <p className="text-sm font-medium">$color-support-success-dark</p>
-                    <p className="text-xs text-muted-foreground">#006B4F</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Support Danger */}
-              <div>
-                <h4 className="text-lg font-semibold mb-4">Support Danger</h4>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#FFFAAD' }}></div>
-                    <p className="text-sm font-medium">$color-support-danger-light</p>
-                    <p className="text-xs text-muted-foreground">#FFFAAD</p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#B84D01' }}></div>
-                    <p className="text-sm font-medium">$color-support-danger-dark</p>
-                    <p className="text-xs text-muted-foreground">#B84D01</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Accessibility */}
-              <div>
-                <h4 className="text-lg font-semibold mb-4">Accessibility</h4>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#FFF333' }}></div>
-                    <p className="text-sm font-medium">$color-accessibility</p>
-                    <p className="text-xs text-muted-foreground">#FFF333</p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </CardContent>
           </Card>
         </>
@@ -692,6 +610,212 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                     <p className="text-xs text-muted-foreground">96px</p>
                   </div>
                 </div>
+              </div>
+            </CardContent>
+          </Card>
+        </>
+      )}
+
+      {activeSubmenu === "shadow" && (
+        <>
+          {/* Shadow Tokens Section */}
+          <Card className="border-0 shadow-none">
+            <CardHeader>
+              <CardTitle>Shadow Tokens</CardTitle>
+              <CardDescription>
+                Reference values for shadow tokens (Box Shadow)
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Level 1 */}
+              <div className="flex flex-col items-center text-center p-4 border rounded-md bg-background">
+                <div
+                  className="w-24 h-24 rounded-full bg-white mb-4"
+                  style={{
+                    boxShadow: "0px 4px 8px -2px rgba(31, 29, 29, 0.16)", // Applying Level 1 shadow
+                  }}
+                ></div>
+                <h4 className="text-lg font-semibold mb-2">Level 1</h4>
+                <p className="text-sm font-medium">$shadow-offset-x-none</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 0px</p>
+                <p className="text-sm font-medium">$shadow-offset-y-level-1</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 4px</p>
+                <p className="text-sm font-medium">$shadow-blur-radius-level-1</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 8px</p>
+                <p className="text-sm font-medium">$shadow-spread-radius-default</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: -2px</p>
+                <p className="text-sm font-medium">$opacity-light</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 16%</p>
+                <p className="text-sm font-medium">$color-neutral-darkest</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: #1F1D1D</p>
+              </div>
+
+              {/* Level 2 */}
+              <div className="flex flex-col items-center text-center p-4 border rounded-md bg-background">
+                <div
+                  className="w-24 h-24 rounded-full bg-white mb-4"
+                  style={{
+                    boxShadow: "0px 8px 16px -2px rgba(31, 29, 29, 0.16)", // Applying Level 2 shadow
+                  }}
+                ></div>
+                <h4 className="text-lg font-semibold mb-2">Level 2</h4>
+                <p className="text-sm font-medium">$shadow-offset-x-none</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 0px</p>
+                <p className="text-sm font-medium">$shadow-offset-y-level-2</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 8px</p>
+                <p className="text-sm font-medium">$shadow-blur-radius-level-2</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 16px</p>
+                <p className="text-sm font-medium">$shadow-spread-radius-default</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: -2px</p>
+                <p className="text-sm font-medium">$opacity-light</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 16%</p>
+                <p className="text-sm font-medium">$color-neutral-darkest</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: #1F1D1D</p>
+              </div>
+
+              {/* Level 3 */}
+              <div className="flex flex-col items-center text-center p-4 border rounded-md bg-background">
+                <div
+                  className="w-24 h-24 rounded-full bg-white mb-4"
+                  style={{
+                    boxShadow: "0px 16px 24px -2px rgba(31, 29, 29, 0.16)", // Applying Level 3 shadow
+                  }}
+                ></div>
+                <h4 className="text-lg font-semibold mb-2">Level 3</h4>
+                <p className="text-sm font-medium">$shadow-offset-x-none</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 0px</p>
+                <p className="text-sm font-medium">$shadow-offset-y-level-3</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 16px</p>
+                <p className="text-sm font-medium">$shadow-blur-radius-level-3</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 24px</p>
+                <p className="text-sm font-medium">$shadow-spread-radius-default</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: -2px</p>
+                <p className="text-sm font-medium">$opacity-light</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 16%</p>
+                <p className="text-sm font-medium">$color-neutral-darkest</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: #1F1D1D</p>
+              </div>
+            </CardContent>
+          </Card>
+        </>
+      )}
+
+      {activeSubmenu === "screen" && (
+        <>
+          {/* Screen Size Tokens Section */}
+          <Card className="border-0 shadow-none">
+            <CardHeader>
+              <CardTitle>Screen Size Tokens</CardTitle>
+              <CardDescription>
+                Reference values for screen size tokens (Breakpoints)
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-wrap gap-6">
+              <div className="flex flex-col items-start">
+                <p className="text-sm font-medium">$screen-size-xxxs</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 360px</p>
+              </div>
+              <div className="flex flex-col items-start">
+                <p className="text-sm font-medium">$screen-size-xxs</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 480px</p>
+              </div>
+              <div className="flex flex-col items-start">
+                <p className="text-sm font-medium">$screen-size-xs</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 540px</p>
+              </div>
+              <div className="flex flex-col items-start">
+                <p className="text-sm font-medium">$screen-size-sm</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 640px</p>
+              </div>
+              <div className="flex flex-col items-start">
+                <p className="text-sm font-medium">$screen-size-md</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 768px</p>
+              </div>
+              <div className="flex flex-col items-start">
+                <p className="text-sm font-medium">$screen-size-lg</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 992px</p>
+              </div>
+              <div className="flex flex-col items-start">
+                <p className="text-sm font-medium">$screen-size-xl</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 1024px</p>
+              </div>
+              <div className="flex flex-col items-start">
+                <p className="text-sm font-medium">$screen-size-xxl</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 1200px</p>
+              </div>
+              <div className="flex flex-col items-start">
+                <p className="text-sm font-medium">$screen-size-xxxl</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 1440px</p>
+              </div>
+              <div className="flex flex-col items-start">
+                <p className="text-sm font-medium">$screen-size-ul</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 1920px</p>
+              </div>
+            </CardContent>
+          </Card>
+        </>
+      )}
+
+      {activeSubmenu === "opacity" && (
+        <>
+          {/* Opacity Tokens Section */}
+          <Card className="border-0 shadow-none">
+            <CardHeader>
+              <CardTitle>Opacity Tokens</CardTitle>
+              <CardDescription>
+                Reference values for opacity tokens
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-wrap gap-6">
+              {/* Opacity Semi-Transparent */}
+              <div className="flex flex-col items-center">
+                <div className="relative w-16 h-16 mb-2">
+                  <div className="absolute inset-0 bg-gray-200"></div>
+                  <div className="absolute inset-0 bg-red-600"></div>
+                  <div className="absolute top-2 left-2 w-16 h-16" style={{ backgroundColor: hexToRgba(neutralDarkestColor, 0.08) }}></div>
+                </div>
+                <p className="text-sm font-medium">$opacity-semi-transparent</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 8%</p>
+              </div>
+              {/* Opacity Light */}
+              <div className="flex flex-col items-center">
+                <div className="relative w-16 h-16 mb-2">
+                  <div className="absolute inset-0 bg-gray-200"></div>
+                  <div className="absolute inset-0 bg-red-600"></div>
+                  <div className="absolute top-2 left-2 w-16 h-16" style={{ backgroundColor: hexToRgba(neutralDarkestColor, 0.16) }}></div>
+                </div>
+                <p className="text-sm font-medium">$opacity-light</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 16%</p>
+              </div>
+              {/* Opacity Medium */}
+              <div className="flex flex-col items-center">
+                <div className="relative w-16 h-16 mb-2">
+                  <div className="absolute inset-0 bg-gray-200"></div>
+                  <div className="absolute inset-0 bg-red-600"></div>
+                  <div className="absolute top-2 left-2 w-16 h-16" style={{ backgroundColor: hexToRgba(neutralDarkestColor, 0.32) }}></div>
+                </div>
+                <p className="text-sm font-medium">$opacity-medium</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 32%</p>
+              </div>
+              {/* Opacity Intense */}
+              <div className="flex flex-col items-center">
+                <div className="relative w-16 h-16 mb-2">
+                  <div className="absolute inset-0 bg-gray-200"></div>
+                  <div className="absolute inset-0 bg-red-600"></div>
+                  <div className="absolute top-2 left-2 w-16 h-16" style={{ backgroundColor: hexToRgba(neutralDarkestColor, 0.64) }}></div>
+                </div>
+                <p className="text-sm font-medium">$opacity-intense</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 64%</p>
+              </div>
+              {/* Opacity Semi-Opaque */}
+              <div className="flex flex-col items-center">
+                <div className="relative w-16 h-16 mb-2">
+                  <div className="absolute inset-0 bg-gray-200"></div>
+                  <div className="absolute inset-0 bg-red-600"></div>
+                  <div className="absolute top-2 left-2 w-16 h-16" style={{ backgroundColor: hexToRgba(neutralDarkestColor, 0.80) }}></div>
+                </div>
+                <p className="text-sm font-medium">$opacity-semi-opaque</p>
+                <p className="text-xs text-muted-foreground">Valor de referência: 80%</p>
               </div>
             </CardContent>
           </Card>

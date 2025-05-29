@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
-import ConfigurationPanel from "./ConfigurationPanel";
 import ComponentShowcase from "./ComponentShowcase";
 import ThemeManager from "./ThemeManager";
 import CLIGuide from "./CLIGuide";
@@ -13,17 +12,11 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 
 const Home = () => {
-  const [activeTab, setActiveTab] = useState("configuration");
+  const [activeTab, setActiveTab] = useState("tokens");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeTokenSubmenu, setActiveTokenSubmenu] = useState<"border" | "color" | "types" | "space">("border");
+  const [activeTokenSubmenu, setActiveTokenSubmenu] = useState<"border" | "color" | "types" | "space" | "shadow" | "screen" | "opacity">("color");
 
   const tabs = [
-    {
-      id: "configuration",
-      label: "Configuration",
-      icon: <Palette className="h-5 w-5" />,
-      component: <ConfigurationPanel />,
-    },
     {
       id: "tokens",
       label: "Tokens",
@@ -34,6 +27,9 @@ const Home = () => {
         { id: "color" as "color", label: "Color" },
         { id: "types" as "types", label: "Types" },
         { id: "space" as "space", label: "Space" },
+        { id: "shadow" as "shadow", label: "Shadow" },
+        { id: "screen" as "screen", label: "Screen Size" },
+        { id: "opacity" as "opacity", label: "Opacity" },
       ],
     },
     {
