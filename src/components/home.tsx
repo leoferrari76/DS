@@ -14,6 +14,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 const Home = () => {
   const [activeTab, setActiveTab] = useState("configuration");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeTokenSubmenu, setActiveTokenSubmenu] = useState<"border" | "color" | "types" | "space">("border");
 
   const tabs = [
     {
@@ -26,7 +27,13 @@ const Home = () => {
       id: "tokens",
       label: "Tokens",
       icon: <Sparkles className="h-5 w-5" />,
-      component: <TokenShowcase />,
+      component: <TokenShowcase activeSubmenu={activeTokenSubmenu} />,
+      submenus: [
+        { id: "border" as "border", label: "Border" },
+        { id: "color" as "color", label: "Color" },
+        { id: "types" as "types", label: "Types" },
+        { id: "space" as "space", label: "Space" },
+      ],
     },
     {
       id: "components",
@@ -66,11 +73,31 @@ const Home = () => {
                 <Button
                   variant={activeTab === tab.id ? "secondary" : "ghost"}
                   className="w-full justify-start"
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => {
+                    setActiveTab(tab.id);
+                    if (tab.id !== "tokens") {
+                      setActiveTokenSubmenu("border");
+                    }
+                  }}
                 >
                   {tab.icon}
                   <span className="ml-3">{tab.label}</span>
                 </Button>
+                {activeTab === "tokens" && tab.id === "tokens" && tab.submenus && (
+                  <ul className="ml-6 mt-2 space-y-1">
+                    {tab.submenus.map((submenu) => (
+                      <li key={submenu.id}>
+                        <Button
+                          variant={activeTokenSubmenu === submenu.id ? "secondary" : "ghost"}
+                          className="w-full justify-start text-sm"
+                          onClick={() => setActiveTokenSubmenu(submenu.id)}
+                        >
+                          {submenu.label}
+                        </Button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>
@@ -113,12 +140,33 @@ const Home = () => {
                       className="w-full justify-start"
                       onClick={() => {
                         setActiveTab(tab.id);
+                        if (tab.id !== "tokens") {
+                          setActiveTokenSubmenu("border");
+                        }
                         setIsMobileMenuOpen(false);
                       }}
                     >
                       {tab.icon}
                       <span className="ml-3">{tab.label}</span>
                     </Button>
+                    {activeTab === "tokens" && tab.id === "tokens" && tab.submenus && (
+                      <ul className="ml-6 mt-2 space-y-1">
+                        {tab.submenus.map((submenu) => (
+                          <li key={submenu.id}>
+                            <Button
+                              variant={activeTokenSubmenu === submenu.id ? "secondary" : "ghost"}
+                              className="w-full justify-start text-sm"
+                              onClick={() => {
+                                setActiveTokenSubmenu(submenu.id);
+                                setIsMobileMenuOpen(false);
+                              }}
+                            >
+                              {submenu.label}
+                            </Button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -132,7 +180,11 @@ const Home = () => {
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="md:hidden h-16" /> {/* Spacer for mobile header */}
         <div className="flex-1 overflow-auto p-6">
-          {tabs.find((tab) => tab.id === activeTab)?.component}
+          {activeTab === "tokens" ? (
+            <TokenShowcase activeSubmenu={activeTokenSubmenu} />
+          ) : (
+            tabs.find((tab) => tab.id === activeTab)?.component
+          )}
         </div>
       </div>
     </div>
