@@ -31,6 +31,7 @@ import {
   Type,
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface ColorConfig {
   name: string;
@@ -54,17 +55,8 @@ interface BorderConfig {
 }
 
 const ConfigurationPanel = () => {
+  const { colors, updateColors } = useTheme();
   const [activeTab, setActiveTab] = useState("colors");
-  const [colors, setColors] = useState<ColorConfig[]>([
-    { name: "primary", value: "#0f172a" },
-    { name: "secondary", value: "#6366f1" },
-    { name: "accent", value: "#22c55e" },
-    { name: "background", value: "#ffffff" },
-    { name: "foreground", value: "#0f172a" },
-    { name: "muted", value: "#f1f5f9" },
-    { name: "destructive", value: "#ef4444" },
-  ]);
-
   const [typography, setTypography] = useState<TypographyConfig>({
     fontFamily: "Inter, sans-serif",
     fontSize: "16px",
@@ -87,7 +79,7 @@ const ConfigurationPanel = () => {
   const handleColorChange = (index: number, value: string) => {
     const newColors = [...colors];
     newColors[index].value = value;
-    setColors(newColors);
+    updateColors(newColors);
     setIsSaved(false);
   };
 

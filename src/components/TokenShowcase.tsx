@@ -6,12 +6,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface TokenShowcaseProps {
   activeSubmenu: "border" | "color" | "types" | "space";
 }
 
 const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
+  const { colors } = useTheme();
+
   return (
     <div className="w-full space-y-6">
       {activeSubmenu === "border" && (
@@ -110,31 +113,16 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
               <div>
                 <h4 className="text-lg font-semibold mb-4">Brand Primary</h4>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#FFE3E3' }}></div>
-                    <p className="text-sm font-medium">$color-brand-primary-lightest</p>
-                    <p className="text-xs text-muted-foreground">#FFE3E3</p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#FC867F' }}></div>
-                    <p className="text-sm font-medium">$color-brand-primary-light</p>
-                    <p className="text-xs text-muted-foreground">#FC867F</p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#DA291C' }}></div>
-                    <p className="text-sm font-medium">$color-brand-primary-medium</p>
-                    <p className="text-xs text-muted-foreground">#DA291C</p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#B41E13' }}></div>
-                    <p className="text-sm font-medium">$color-brand-primary-dark</p>
-                    <p className="text-xs text-muted-foreground">#B41E13</p>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="w-full h-12 rounded-md mb-2" style={{ backgroundColor: '#83170F' }}></div>
-                    <p className="text-sm font-medium">$color-brand-primary-darkest</p>
-                    <p className="text-xs text-muted-foreground">#83170F</p>
-                  </div>
+                  {colors.map((color) => (
+                    <div key={color.name} className="flex flex-col items-center">
+                      <div 
+                        className="w-full h-12 rounded-md mb-2" 
+                        style={{ backgroundColor: color.value }}
+                      ></div>
+                      <p className="text-sm font-medium">$color-{color.name}</p>
+                      <p className="text-xs text-muted-foreground">{color.value}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -284,49 +272,48 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
               <div>
                 <h4 className="text-lg font-semibold mb-4">Font Size</h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
-                  {/* Assuming 'aa' is a visual representation, we'll just display the text and value */}
                   <div className="flex flex-col items-center text-center">
                     <p style={{ fontSize: '12px' }} className="font-bold mb-1">Aa</p>
                     <p className="text-sm font-medium">$font-size-xxxxs</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 12px</p>
                   </div>
                   <div className="flex flex-col items-center text-center">
-                     <p style={{ fontSize: '14px' }} className="font-bold mb-1">Aa</p>
+                    <p style={{ fontSize: '14px' }} className="font-bold mb-1">Aa</p>
                     <p className="text-sm font-medium">$font-size-xxs</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 14px</p>
                   </div>
                   <div className="flex flex-col items-center text-center">
-                     <p style={{ fontSize: '16px' }} className="font-bold mb-1">Aa</p>
+                    <p style={{ fontSize: '16px' }} className="font-bold mb-1">Aa</p>
                     <p className="text-sm font-medium">$font-size-xs</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 16px</p>
                   </div>
                   <div className="flex flex-col items-center text-center">
-                     <p style={{ fontSize: '20px' }} className="font-bold mb-1">Aa</p>
+                    <p style={{ fontSize: '20px' }} className="font-bold mb-1">Aa</p>
                     <p className="text-sm font-medium">$font-size-sm</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 20px</p>
                   </div>
                   <div className="flex flex-col items-center text-center">
-                     <p style={{ fontSize: '24px' }} className="font-bold mb-1">Aa</p>
+                    <p style={{ fontSize: '24px' }} className="font-bold mb-1">Aa</p>
                     <p className="text-sm font-medium">$font-size-md</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 24px</p>
                   </div>
                   <div className="flex flex-col items-center text-center">
-                     <p style={{ fontSize: '28px' }} className="font-bold mb-1">Aa</p>
+                    <p style={{ fontSize: '28px' }} className="font-bold mb-1">Aa</p>
                     <p className="text-sm font-medium">$font-size-lg</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 28px</p>
                   </div>
                   <div className="flex flex-col items-center text-center">
-                     <p style={{ fontSize: '32px' }} className="font-bold mb-1">Aa</p>
+                    <p style={{ fontSize: '32px' }} className="font-bold mb-1">Aa</p>
                     <p className="text-sm font-medium">$font-size-xl</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 32px</p>
                   </div>
                   <div className="flex flex-col items-center text-center">
-                     <p style={{ fontSize: '36px' }} className="font-bold mb-1">Aa</p>
+                    <p style={{ fontSize: '36px' }} className="font-bold mb-1">Aa</p>
                     <p className="text-sm font-medium">$font-size-xxl</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 36px</p>
                   </div>
-                   <div className="flex flex-col items-center text-center">
-                     <p style={{ fontSize: '48px' }} className="font-bold mb-1">Aa</p>
+                  <div className="flex flex-col items-center text-center">
+                    <p style={{ fontSize: '48px' }} className="font-bold mb-1">Aa</p>
                     <p className="text-sm font-medium">$font-size-xxxl</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 48px</p>
                   </div>
@@ -337,7 +324,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
               <div>
                 <h4 className="text-lg font-semibold mb-4">Font Line Height</h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                   <div className="flex flex-col">
+                  <div className="flex flex-col">
                     <p className="text-sm font-medium">$font-line-height-none</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 0</p>
                   </div>
@@ -345,11 +332,11 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                     <p className="text-sm font-medium">$font-line-height-sm</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 100%</p>
                   </div>
-                   <div className="flex flex-col">
+                  <div className="flex flex-col">
                     <p className="text-sm font-medium">$font-line-height-md</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 130%</p>
                   </div>
-                   <div className="flex flex-col">
+                  <div className="flex flex-col">
                     <p className="text-sm font-medium">$font-line-height-lg</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 140%</p>
                   </div>
@@ -358,29 +345,29 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
 
               {/* Font Weight */}
               <div>
-                 <h4 className="text-lg font-semibold mb-4">Font Weight</h4>
+                <h4 className="text-lg font-semibold mb-4">Font Weight</h4>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                   <div className="flex flex-col items-center text-center">
+                  <div className="flex flex-col items-center text-center">
                     <p className="text-xl font-light mb-1">Aa</p>
                     <p className="text-sm font-medium">$font-weight-light</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 300</p>
                   </div>
-                   <div className="flex flex-col items-center text-center">
+                  <div className="flex flex-col items-center text-center">
                     <p className="text-xl font-normal mb-1">Aa</p>
                     <p className="text-sm font-medium">$font-weight-regular</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 400</p>
                   </div>
-                   <div className="flex flex-col items-center text-center">
+                  <div className="flex flex-col items-center text-center">
                     <p className="text-xl font-medium mb-1">Aa</p>
                     <p className="text-sm font-medium">$font-weight-medium</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 500</p>
                   </div>
-                   <div className="flex flex-col items-center text-center">
+                  <div className="flex flex-col items-center text-center">
                     <p className="text-xl font-bold mb-1">Aa</p>
                     <p className="text-sm font-medium">$font-weight-bold</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 700</p>
                   </div>
-                   <div className="flex flex-col items-center text-center">
+                  <div className="flex flex-col items-center text-center">
                     <p className="text-xl font-black mb-1">Aa</p>
                     <p className="text-sm font-medium">$font-weight-black</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: 800</p>
@@ -397,12 +384,12 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                     <p className="text-sm font-medium">$text-underline</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: Underline</p>
                   </div>
-                   <div className="flex flex-col">
+                  <div className="flex flex-col">
                     <p className="line-through text-base mb-1">Example</p>
                     <p className="text-sm font-medium">$text-strike</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: Line-through</p>
                   </div>
-                   <div className="flex flex-col">
+                  <div className="flex flex-col">
                     <p className="uppercase text-base mb-1">Example</p>
                     <p className="text-sm font-medium">$text-uppercase</p>
                     <p className="text-xs text-muted-foreground">Valor de referência: Uppercase</p>
@@ -438,7 +425,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                   {/* XXS: 4px 16px */}
                   <div className="flex flex-col items-center">
                     <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ paddingTop: '4px', paddingBottom: '4px', paddingLeft: '16px', paddingRight: '16px' }}>
-                       <div className="w-full h-8 bg-green-400"></div>
+                      <div className="w-full h-8 bg-green-400"></div>
                     </div>
                     <p className="text-sm font-medium">$spacing-squish-xxs</p>
                     <p className="text-xs text-muted-foreground">4px 16px</p>
@@ -470,7 +457,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                   {/* LG: 16px 32px */}
                   <div className="flex flex-col items-center">
                     <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ paddingTop: '16px', paddingBottom: '16px', paddingLeft: '32px', paddingRight: '32px' }}>
-                       <div className="w-full h-8 bg-green-400"></div>
+                      <div className="w-full h-8 bg-green-400"></div>
                     </div>
                     <p className="text-sm font-medium">$spacing-squish-lg</p>
                     <p className="text-xs text-muted-foreground">16px 32px</p>
@@ -478,7 +465,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                   {/* XL: 24px 32px */}
                   <div className="flex flex-col items-center">
                     <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ paddingTop: '24px', paddingBottom: '24px', paddingLeft: '32px', paddingRight: '32px' }}>
-                       <div className="w-full h-8 bg-green-400"></div>
+                      <div className="w-full h-8 bg-green-400"></div>
                     </div>
                     <p className="text-sm font-medium">$spacing-squish-xl</p>
                     <p className="text-xs text-muted-foreground">24px 32px</p>
@@ -486,7 +473,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                   {/* XXL: 32px 48px */}
                   <div className="flex flex-col items-center">
                     <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ paddingTop: '32px', paddingBottom: '32px', paddingLeft: '48px', paddingRight: '48px' }}>
-                       <div className="w-full h-8 bg-green-400"></div>
+                      <div className="w-full h-8 bg-green-400"></div>
                     </div>
                     <p className="text-sm font-medium">$spacing-squish-xxl</p>
                     <p className="text-xs text-muted-foreground">32px 48px</p>
@@ -498,7 +485,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
               <div>
                 <h4 className="text-lg font-semibold mb-4">Spacing Inset</h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
-                   {/* XXXS: 4px */}
+                  {/* XXXS: 4px */}
                   <div className="flex flex-col items-center">
                     <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ padding: '4px' }}>
                       <div className="w-full h-12 bg-green-400"></div>
@@ -509,7 +496,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                   {/* XXS: 8px */}
                   <div className="flex flex-col items-center">
                     <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ padding: '8px' }}>
-                       <div className="w-full h-12 bg-green-400"></div>
+                      <div className="w-full h-12 bg-green-400"></div>
                     </div>
                     <p className="text-sm font-medium">$spacing-inset-xxs</p>
                     <p className="text-xs text-muted-foreground">8px</p>
@@ -541,7 +528,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                   {/* LG: 32px */}
                   <div className="flex flex-col items-center">
                     <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ padding: '32px' }}>
-                       <div className="w-full h-12 bg-green-400"></div>
+                      <div className="w-full h-12 bg-green-400"></div>
                     </div>
                     <p className="text-sm font-medium">$spacing-inset-lg</p>
                     <p className="text-xs text-muted-foreground">32px</p>
@@ -549,7 +536,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                   {/* XL: 48px */}
                   <div className="flex flex-col items-center">
                     <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ padding: '48px' }}>
-                       <div className="w-full h-12 bg-green-400"></div>
+                      <div className="w-full h-12 bg-green-400"></div>
                     </div>
                     <p className="text-sm font-medium">$spacing-inset-xl</p>
                     <p className="text-xs text-muted-foreground">48px</p>
@@ -561,7 +548,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
               <div>
                 <h4 className="text-lg font-semibold mb-4">Spacing Stack</h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
-                   {/* XXXS: 4px */}
+                  {/* XXXS: 4px */}
                   <div className="flex flex-col items-center">
                     <div className="w-full bg-gray-200 flex items-center justify-center">
                       <div className="w-full bg-orange-400" style={{ height: '4px' }}></div>
@@ -572,7 +559,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                   {/* XXS: 8px */}
                   <div className="flex flex-col items-center">
                     <div className="w-full bg-gray-200 flex items-center justify-center">
-                       <div className="w-full bg-orange-400" style={{ height: '8px' }}></div>
+                      <div className="w-full bg-orange-400" style={{ height: '8px' }}></div>
                     </div>
                     <p className="text-sm font-medium">$spacing-stack-xxs</p>
                     <p className="text-xs text-muted-foreground">8px</p>
@@ -604,7 +591,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                   {/* LG: 32px */}
                   <div className="flex flex-col items-center">
                     <div className="w-full bg-gray-200 flex items-center justify-center">
-                       <div className="w-full bg-orange-400" style={{ height: '32px' }}></div>
+                      <div className="w-full bg-orange-400" style={{ height: '32px' }}></div>
                     </div>
                     <p className="text-sm font-medium">$spacing-stack-lg</p>
                     <p className="text-xs text-muted-foreground">32px</p>
@@ -612,7 +599,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                   {/* XL: 48px */}
                   <div className="flex flex-col items-center">
                     <div className="w-full bg-gray-200 flex items-center justify-center">
-                       <div className="w-full bg-orange-400" style={{ height: '48px' }}></div>
+                      <div className="w-full bg-orange-400" style={{ height: '48px' }}></div>
                     </div>
                     <p className="text-sm font-medium">$spacing-stack-xl</p>
                     <p className="text-xs text-muted-foreground">48px</p>
@@ -620,7 +607,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                   {/* XXL: 64px */}
                   <div className="flex flex-col items-center">
                     <div className="w-full bg-gray-200 flex items-center justify-center">
-                       <div className="w-full bg-orange-400" style={{ height: '64px' }}></div>
+                      <div className="w-full bg-orange-400" style={{ height: '64px' }}></div>
                     </div>
                     <p className="text-sm font-medium">$spacing-stack-xxl</p>
                     <p className="text-xs text-muted-foreground">64px</p>
@@ -628,7 +615,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                   {/* XXXL: 96px */}
                   <div className="flex flex-col items-center">
                     <div className="w-full bg-gray-200 flex items-center justify-center">
-                       <div className="w-full bg-orange-400" style={{ height: '96px' }}></div>
+                      <div className="w-full bg-orange-400" style={{ height: '96px' }}></div>
                     </div>
                     <p className="text-sm font-medium">$spacing-stack-xxxl</p>
                     <p className="text-xs text-muted-foreground">96px</p>
@@ -640,7 +627,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
               <div>
                 <h4 className="text-lg font-semibold mb-4">Spacing Inline</h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
-                   {/* XXXS: 4px 8px -> Show 8px */}
+                  {/* XXXS: 4px 8px -> Show 8px */}
                   <div className="flex flex-col items-center">
                     <div className="flex items-center justify-start w-full bg-gray-200 p-2">
                       <div className="bg-green-400" style={{ width: '8px', height: '32px' }}></div>
@@ -651,7 +638,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                   {/* XXS: 8px 12px -> Show 12px */}
                   <div className="flex flex-col items-center">
                     <div className="flex items-center justify-start w-full bg-gray-200 p-2">
-                       <div className="bg-green-400" style={{ width: '12px', height: '32px' }}></div>
+                      <div className="bg-green-400" style={{ width: '12px', height: '32px' }}></div>
                     </div>
                     <p className="text-sm font-medium">$spacing-inline-xxs</p>
                     <p className="text-xs text-muted-foreground">12px</p>
@@ -696,7 +683,7 @@ const TokenShowcase: React.FC<TokenShowcaseProps> = ({ activeSubmenu }) => {
                     <p className="text-sm font-medium">$spacing-inline-xl</p>
                     <p className="text-xs text-muted-foreground">64px</p>
                   </div>
-                   {/* XXL: 64px 96px (Extrapolated based on Stack) -> Show 96px*/}
+                  {/* XXL: 64px 96px (Extrapolated based on Stack) -> Show 96px*/}
                   <div className="flex flex-col items-center">
                     <div className="flex items-center justify-start w-full bg-gray-200 p-2">
                       <div className="bg-green-400" style={{ width: '96px', height: '32px' }}></div>
