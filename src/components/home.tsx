@@ -5,8 +5,9 @@ import ConfigurationPanel from "./ConfigurationPanel";
 import ComponentShowcase from "./ComponentShowcase";
 import ThemeManager from "./ThemeManager";
 import CLIGuide from "./CLIGuide";
+import TokenShowcase from "./TokenShowcase";
 import { Separator } from "@/components/ui/separator";
-import { BookOpen, Palette, Layers, Terminal, Menu } from "lucide-react";
+import { BookOpen, Palette, Layers, Terminal, Menu, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
@@ -20,6 +21,12 @@ const Home = () => {
       label: "Configuration",
       icon: <Palette className="h-5 w-5" />,
       component: <ConfigurationPanel />,
+    },
+    {
+      id: "tokens",
+      label: "Tokens",
+      icon: <Sparkles className="h-5 w-5" />,
+      component: <TokenShowcase />,
     },
     {
       id: "components",
@@ -125,11 +132,7 @@ const Home = () => {
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="md:hidden h-16" /> {/* Spacer for mobile header */}
         <div className="flex-1 overflow-auto p-6">
-          <Card className="w-full h-full bg-background">
-            <CardContent className="p-6">
-              {tabs.find((tab) => tab.id === activeTab)?.component}
-            </CardContent>
-          </Card>
+          {tabs.find((tab) => tab.id === activeTab)?.component}
         </div>
       </div>
     </div>
