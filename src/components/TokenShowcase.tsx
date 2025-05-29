@@ -397,14 +397,312 @@ const TokenShowcase: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Placeholder for Spacing Tokens */}
+      {/* Spacing Tokens Section */}
       <Card className="border-0 shadow-none">
         <CardHeader>
           <CardTitle>Spacing Tokens</CardTitle>
           <CardDescription>Spacing scale and unit tokens</CardDescription>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">Visualização dos tokens de espaçamento...</p>
+        <CardContent className="space-y-6">
+          {/* Spacing Squish */}
+          <div>
+            <h4 className="text-lg font-semibold mb-4">Spacing Squish</h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
+              {/* XXXS: 4px 8px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ paddingTop: '4px', paddingBottom: '4px', paddingLeft: '8px', paddingRight: '8px' }}>
+                  <div className="w-full h-8 bg-green-400"></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-squish-xxxs</p>
+                <p className="text-xs text-muted-foreground">4px 8px</p>
+              </div>
+              {/* XXS: 4px 16px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ paddingTop: '4px', paddingBottom: '4px', paddingLeft: '16px', paddingRight: '16px' }}>
+                   <div className="w-full h-8 bg-green-400"></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-squish-xxs</p>
+                <p className="text-xs text-muted-foreground">4px 16px</p>
+              </div>
+              {/* XS: 8px 16px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ paddingTop: '8px', paddingBottom: '8px', paddingLeft: '16px', paddingRight: '16px' }}>
+                  <div className="w-full h-8 bg-green-400"></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-squish-xs</p>
+                <p className="text-xs text-muted-foreground">8px 16px</p>
+              </div>
+              {/* SM: 8px 24px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ paddingTop: '8px', paddingBottom: '8px', paddingLeft: '24px', paddingRight: '24px' }}>
+                  <div className="w-full h-8 bg-green-400"></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-squish-sm</p>
+                <p className="text-xs text-muted-foreground">8px 24px</p>
+              </div>
+              {/* MD: 16px 24px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ paddingTop: '16px', paddingBottom: '16px', paddingLeft: '24px', paddingRight: '24px' }}>
+                  <div className="w-full h-8 bg-green-400"></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-squish-md</p>
+                <p className="text-xs text-muted-foreground">16px 24px</p>
+              </div>
+              {/* LG: 16px 32px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ paddingTop: '16px', paddingBottom: '16px', paddingLeft: '32px', paddingRight: '32px' }}>
+                   <div className="w-full h-8 bg-green-400"></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-squish-lg</p>
+                <p className="text-xs text-muted-foreground">16px 32px</p>
+              </div>
+              {/* XL: 24px 32px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ paddingTop: '24px', paddingBottom: '24px', paddingLeft: '32px', paddingRight: '32px' }}>
+                   <div className="w-full h-8 bg-green-400"></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-squish-xl</p>
+                <p className="text-xs text-muted-foreground">24px 32px</p>
+              </div>
+              {/* XXL: 32px 48px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ paddingTop: '32px', paddingBottom: '32px', paddingLeft: '48px', paddingRight: '48px' }}>
+                   <div className="w-full h-8 bg-green-400"></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-squish-xxl</p>
+                <p className="text-xs text-muted-foreground">32px 48px</p>
+              </div>
+            </div>
+          </div>
+          {/* Add other spacing types here if needed */}
+        </CardContent>
+      </Card>
+
+      {/* Spacing Inset Section */}
+      <Card className="border-0 shadow-none">
+        <CardHeader>
+          <CardTitle>Spacing Inset</CardTitle>
+          <CardDescription>
+            Reference values for spacing inset tokens
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
+           {/* XXXS: 4px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ padding: '4px' }}>
+                  <div className="w-full h-12 bg-green-400"></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-inset-xxxs</p>
+                <p className="text-xs text-muted-foreground">4px</p>
+              </div>
+              {/* XXS: 8px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ padding: '8px' }}>
+                   <div className="w-full h-12 bg-green-400"></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-inset-xxs</p>
+                <p className="text-xs text-muted-foreground">8px</p>
+              </div>
+              {/* XS: 12px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ padding: '12px' }}>
+                  <div className="w-full h-12 bg-green-400"></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-inset-xs</p>
+                <p className="text-xs text-muted-foreground">12px</p>
+              </div>
+              {/* SM: 16px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ padding: '16px' }}>
+                  <div className="w-full h-12 bg-green-400"></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-inset-sm</p>
+                <p className="text-xs text-muted-foreground">16px</p>
+              </div>
+              {/* MD: 24px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ padding: '24px' }}>
+                  <div className="w-full h-12 bg-green-400"></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-inset-md</p>
+                <p className="text-xs text-muted-foreground">24px</p>
+              </div>
+              {/* LG: 32px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ padding: '32px' }}>
+                   <div className="w-full h-12 bg-green-400"></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-inset-lg</p>
+                <p className="text-xs text-muted-foreground">32px</p>
+              </div>
+              {/* XL: 48px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 p-2 flex items-center justify-center" style={{ padding: '48px' }}>
+                   <div className="w-full h-12 bg-green-400"></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-inset-xl</p>
+                <p className="text-xs text-muted-foreground">48px</p>
+              </div>
+        </CardContent>
+      </Card>
+
+      {/* Spacing Stack Section */}
+      <Card className="border-0 shadow-none">
+        <CardHeader>
+          <CardTitle>Spacing Stack</CardTitle>
+          <CardDescription>
+            Reference values for spacing stack tokens
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
+           {/* XXXS: 4px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 flex items-center justify-center">
+                  <div className="w-full bg-orange-400" style={{ height: '4px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-stack-xxxs</p>
+                <p className="text-xs text-muted-foreground">4px</p>
+              </div>
+              {/* XXS: 8px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 flex items-center justify-center">
+                   <div className="w-full bg-orange-400" style={{ height: '8px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-stack-xxs</p>
+                <p className="text-xs text-muted-foreground">8px</p>
+              </div>
+              {/* XS: 12px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 flex items-center justify-center">
+                  <div className="w-full bg-orange-400" style={{ height: '12px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-stack-xs</p>
+                <p className="text-xs text-muted-foreground">12px</p>
+              </div>
+              {/* SM: 16px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 flex items-center justify-center">
+                  <div className="w-full bg-orange-400" style={{ height: '16px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-stack-sm</p>
+                <p className="text-xs text-muted-foreground">16px</p>
+              </div>
+              {/* MD: 24px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 flex items-center justify-center">
+                  <div className="w-full bg-orange-400" style={{ height: '24px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-stack-md</p>
+                <p className="text-xs text-muted-foreground">24px</p>
+              </div>
+              {/* LG: 32px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 flex items-center justify-center">
+                   <div className="w-full bg-orange-400" style={{ height: '32px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-stack-lg</p>
+                <p className="text-xs text-muted-foreground">32px</p>
+              </div>
+              {/* XL: 48px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 flex items-center justify-center">
+                   <div className="w-full bg-orange-400" style={{ height: '48px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-stack-xl</p>
+                <p className="text-xs text-muted-foreground">48px</p>
+              </div>
+              {/* XXL: 64px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 flex items-center justify-center">
+                   <div className="w-full bg-orange-400" style={{ height: '64px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-stack-xxl</p>
+                <p className="text-xs text-muted-foreground">64px</p>
+              </div>
+              {/* XXXL: 96px */}
+              <div className="flex flex-col items-center">
+                <div className="w-full bg-gray-200 flex items-center justify-center">
+                   <div className="w-full bg-orange-400" style={{ height: '96px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-stack-xxxl</p>
+                <p className="text-xs text-muted-foreground">96px</p>
+              </div>
+        </CardContent>
+      </Card>
+
+      {/* Spacing Inline Section */}
+      <Card className="border-0 shadow-none">
+        <CardHeader>
+          <CardTitle>Spacing Inline</CardTitle>
+          <CardDescription>
+            Reference values for spacing inline tokens
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
+           {/* XXXS: 4px 8px -> Show 8px */}
+              <div className="flex flex-col items-center">
+                <div className="flex items-center justify-start w-full bg-gray-200 p-2">
+                  <div className="bg-green-400" style={{ width: '8px', height: '32px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-inline-xxxs</p>
+                <p className="text-xs text-muted-foreground">8px</p>
+              </div>
+              {/* XXS: 8px 12px -> Show 12px */}
+              <div className="flex flex-col items-center">
+                <div className="flex items-center justify-start w-full bg-gray-200 p-2">
+                   <div className="bg-green-400" style={{ width: '12px', height: '32px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-inline-xxs</p>
+                <p className="text-xs text-muted-foreground">12px</p>
+              </div>
+              {/* XS: 12px 16px -> Show 16px */}
+              <div className="flex flex-col items-center">
+                <div className="flex items-center justify-start w-full bg-gray-200 p-2">
+                  <div className="bg-green-400" style={{ width: '16px', height: '32px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-inline-xs</p>
+                <p className="text-xs text-muted-foreground">16px</p>
+              </div>
+              {/* SM: 16px 24px -> Show 24px */}
+              <div className="flex flex-col items-center">
+                <div className="flex items-center justify-start w-full bg-gray-200 p-2">
+                  <div className="bg-green-400" style={{ width: '24px', height: '32px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-inline-sm</p>
+                <p className="text-xs text-muted-foreground">24px</p>
+              </div>
+              {/* MD: 24px 32px -> Show 32px */}
+              <div className="flex flex-col items-center">
+                <div className="flex items-center justify-start w-full bg-gray-200 p-2">
+                  <div className="bg-green-400" style={{ width: '32px', height: '32px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-inline-md</p>
+                <p className="text-xs text-muted-foreground">32px</p>
+              </div>
+              {/* LG: 32px 48px -> Show 48px */}
+              <div className="flex flex-col items-center">
+                <div className="flex items-center justify-start w-full bg-gray-200 p-2">
+                  <div className="bg-green-400" style={{ width: '48px', height: '32px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-inline-lg</p>
+                <p className="text-xs text-muted-foreground">48px</p>
+              </div>
+              {/* XL: 48px 64px -> Show 64px */}
+              <div className="flex flex-col items-center">
+                <div className="flex items-center justify-start w-full bg-gray-200 p-2">
+                  <div className="bg-green-400" style={{ width: '64px', height: '32px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-inline-xl</p>
+                <p className="text-xs text-muted-foreground">64px</p>
+              </div>
+               {/* XXL: 64px 96px (Extrapolated based on Stack) -> Show 96px*/}
+              <div className="flex flex-col items-center">
+                <div className="flex items-center justify-start w-full bg-gray-200 p-2">
+                  <div className="bg-green-400" style={{ width: '96px', height: '32px' }}></div>
+                </div>
+                <p className="text-sm font-medium">$spacing-inline-xxl</p>
+                <p className="text-xs text-muted-foreground">96px</p>
+              </div>
         </CardContent>
       </Card>
     </div>
